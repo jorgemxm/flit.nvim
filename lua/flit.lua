@@ -155,11 +155,9 @@ local function flit (kwargs)
       leap_kwargs.opts.special_keys.prev_target =
         { leap_kwargs.opts.special_keys.prev_target }
     end
-    table.insert(leap_kwargs.opts.special_keys.next_target,
-                 leap_kwargs.t and kwargs.keys.t or kwargs.keys.f)
+    table.insert(leap_kwargs.opts.special_keys.next_target, kwargs.keys.f)
 
-    table.insert(leap_kwargs.opts.special_keys.prev_target,
-                 leap_kwargs.t and kwargs.keys.T or kwargs.keys.F)
+    table.insert(leap_kwargs.opts.special_keys.prev_target, kwargs.keys.F)
     -- Add ; and , too.
     table.insert(leap_kwargs.opts.special_keys.next_target, ';')
     table.insert(leap_kwargs.opts.special_keys.prev_target, ',')
@@ -193,13 +191,14 @@ local function setup (kwargs)
   -- Set keymappings.
   flit_kwargs.keys = kwargs.keys or
                      kwargs.keymaps or
-                     { f = 'f', F = 'F', t = 't', T = 'T' }
+                     { f = 'f', F = 'F' } --, t = 't', T = 'T' }
 
   local key_specific_leap_kwargs = {
     [flit_kwargs.keys.f] = {},
     [flit_kwargs.keys.F] = { backward = true },
-    [flit_kwargs.keys.t] = { offset = -1, t = true },
-    [flit_kwargs.keys.T] = { backward = true, offset = 1, t = true }
+    ----- Disables t/T keymaps -----
+    -- [flit_kwargs.keys.t] = { offset = -1, t = true },
+    -- [flit_kwargs.keys.T] = { backward = true, offset = 1, t = true }
   }
 
   local labeled_modes =
